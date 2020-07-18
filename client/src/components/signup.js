@@ -8,7 +8,8 @@ import Navbar from './navbar'
 
 const Signup =()=>{
     const history = useHistory()
-    const [name,setName] = useState("")
+    const [firstName,setName] = useState("")
+    const [lastName,setlName] = useState("")
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const [show,showPass] = useState("password")
@@ -20,7 +21,7 @@ const Signup =()=>{
   
 const PostData=()=>{
     // username validation
-    if(!/^(?=.{4,})/.test(name)){
+    if(!/^(?=.{4,})/.test(firstName)){
         nameError("username can contain mininum 4 characters")
         return
     }
@@ -41,7 +42,7 @@ const PostData=()=>{
             "content-Type":"application/json"
         },
         body:JSON.stringify({
-            name,
+            firstName,lastName,
             email,
             password,
         })
@@ -66,7 +67,27 @@ const PostData=()=>{
     }).catch(err=>{
         console.log(err)
     })
+    fetch("http://localhost:5000/contacts",{
+        method:"post",
+        headers:{
+            "content-Type":"application/json",
+           
+        },
+        body:JSON.stringify({
+            firstName,lastName,
+            email,
+
+        })
+    }).then(response => response.json())
+    .then(data=>{
+        console.log("data",data)
+        history.push('/login')
+        submit(true)
+    }).catch(err=>{
+        console.log(err)
+    })
 }
+
 
 // for show password toggle 
 const pass=()=>{
@@ -85,9 +106,17 @@ const pass=()=>{
                          <Form.Label><h5>Username</h5></Form.Label>
                          <Form.Control type="text" placeholder="Enter username"
                             style={{width:"160%",height:"60px",fontSize:"20px"}} 
-                            value ={name}
+                            value ={firstName}
                             onChange = {(e)=>setName(e.target.value)}/>
                            <p style={{ fontSize: 14, color: "red" }} >{nam||""}</p>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicName">
+                         <Form.Label><h5>Username</h5></Form.Label>
+                         <Form.Control type="text" placeholder="Enter username"
+                            style={{width:"160%",height:"60px",fontSize:"20px"}} 
+                            value ={lastName}
+                            onChange = {(e)=>setlName(e.target.value)}/>
+                           {/* <p style={{ fontSize: 14, color: "red" }} >{nam||""}</p> */}
                     </Form.Group>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label><h5>Email address</h5></Form.Label>
@@ -114,7 +143,7 @@ const pass=()=>{
                              label="show password"/>
                     </Form.Group>
                     <Button className="submit" type="button"  
-                         onClick = {()=>PostData()} disabled={!email || !name || !password }>
+                         onClick = {()=>PostData()} disabled={!email || !firstName || !lastName || !password }>
                         Submit
                     </Button>
                </div>

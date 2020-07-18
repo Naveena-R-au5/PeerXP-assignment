@@ -18,10 +18,12 @@ mongoose.connection.on('error',(err)=>{
  })
 
 require('./model/user')
+require('./model/ticket')
 
 app.use(express.json())
 app.use(cors());
 app.use(require('./routes/user'));
+app.use(require('./routes/ticket'));
 
 app.listen(PORT,()=>{
     console.log("server on PORT",PORT)

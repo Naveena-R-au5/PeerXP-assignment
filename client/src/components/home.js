@@ -7,24 +7,29 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import {UserContext} from '../App'
 import Modal from 'react-bootstrap/Modal'
+import axios from 'axios'
 
 const Home =()=>{
     const history = useHistory()
     const {state,dispatch} = useContext(UserContext)
     console.log("state",state)
     const [User,setUsers] = useState([])
+    const [Users,setU] = useState([])
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 useEffect(()=>{
       if(state){
       const user = JSON.parse(localStorage.getItem("user"))
-      setUsers(user.name.slice(0,2).toUpperCase())
+      setUsers(user.firstName.slice(0,2).toUpperCase())
+      setU(user.lastName)
       if(user){
         dispatch({type:"USER",payload:user})
       }
 }
     },[])
+
+    
       const List=()=>{
              
             if(state){
@@ -45,7 +50,7 @@ useEffect(()=>{
                               <Modal.Header closeButton>
                               </Modal.Header>
                               <Modal.Body><h4 className="nn nav">
-                                    {state?state.name:""},want to logout?</h4>
+                                    {state?state.firstName:""},want to logout?</h4>
                               </Modal.Body>
                         <Modal.Footer>
                              <Button variant="secondary" onClick={handleClose}>

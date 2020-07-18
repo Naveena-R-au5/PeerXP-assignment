@@ -16,9 +16,9 @@ module.exports =(req,res,next)=>{
         if(err){
            return res.status(401).json({error:"you must login first"})
         }
-        const {_id,name} = payload
+        const {_id,firstName,lastName} = payload
       
-        user.findById(_id,name).then(userdata =>{
+        user.findById(_id,firstName,lastName).then(userdata =>{
             req.User = userdata
             console.log("pay",userdata)
             next()

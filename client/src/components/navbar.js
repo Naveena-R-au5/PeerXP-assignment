@@ -18,7 +18,7 @@ const Navbar =()=>{
     useEffect(()=>{
     if(state){
         const user = JSON.parse(localStorage.getItem("user"))
-        setUsers(user.name.slice(0,2).toUpperCase())
+        setUsers(user.firstName.slice(0,2).toUpperCase())
         if(user){
           dispatch({type:"USER",payload:user})
         }
@@ -40,7 +40,7 @@ const Navbar =()=>{
                     <Modal.Header closeButton>
                     </Modal.Header>
                    <Modal.Body>
-                       <h4>{state?state.name:""},want to logout?</h4>
+                       <h4>{state?state.firstName:""},want to logout?</h4>
                    </Modal.Body>
                <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
