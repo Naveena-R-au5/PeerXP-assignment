@@ -1,10 +1,11 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import {Link,useHistory} from 'react-router-dom'
 import {Button} from 'react-bootstrap'
 import Nav from 'react-bootstrap/Nav'
 import Form from 'react-bootstrap/Form'
 import Card from 'react-bootstrap/Card'
 import Navbar from './navbar'
+import {UserContext} from '../App'
 
 const Signup =()=>{
     const history = useHistory()
@@ -49,6 +50,7 @@ const PostData=()=>{
     }).then(res=>res.json())
     .then(data=>{
         console.log(data)
+        // setContact(data.data.data[0].id)
         if(data.errMessage){
             // M.toast({html: 'email already exist',classes:"#b71c1c red darken-4"})
             already(data.errMessage)
@@ -86,6 +88,7 @@ const PostData=()=>{
     }).catch(err=>{
         console.log(err)
     })
+
 }
 
 
@@ -103,16 +106,16 @@ const pass=()=>{
                <Form>
                   <div className="form">
                     <Form.Group controlId="formBasicName">
-                         <Form.Label><h5>Username</h5></Form.Label>
-                         <Form.Control type="text" placeholder="Enter username"
+                         <Form.Label><h5>First name</h5></Form.Label>
+                         <Form.Control type="text" placeholder="Enter firstname"
                             style={{width:"160%",height:"60px",fontSize:"20px"}} 
                             value ={firstName}
                             onChange = {(e)=>setName(e.target.value)}/>
                            <p style={{ fontSize: 14, color: "red" }} >{nam||""}</p>
                     </Form.Group>
                     <Form.Group controlId="formBasicName">
-                         <Form.Label><h5>Username</h5></Form.Label>
-                         <Form.Control type="text" placeholder="Enter username"
+                         <Form.Label><h5>Last name</h5></Form.Label>
+                         <Form.Control type="text" placeholder="Enter lastname"
                             style={{width:"160%",height:"60px",fontSize:"20px"}} 
                             value ={lastName}
                             onChange = {(e)=>setlName(e.target.value)}/>

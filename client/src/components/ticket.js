@@ -23,11 +23,37 @@ const Ticket =()=>{
   const [email,setEmail] = useState("")
   const [phone,setPhone] = useState("")
   const [contactId,setContact] = useState("")
-  
+  const [sub,SubmitT] = useState("")
+
   const handleSubmit = (e) => {
+    SubmitT("Ticket created successfully!!!")
     console.log(state.lastName)
     e.preventDefault()
-
+    fetch("http://localhost:5000/conticket",{
+      method:"POST",
+      headers:{
+          'Accept': 'application/json',
+          "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+      firstName:state.firstName,
+      lastName:state.lastName,
+      email,
+      // contactId:contactId
+      }),
+     
+  
+  })
+  .then(res => res.json())
+  .then(res=>{
+        console.log("contactsss",res.data.data[0])
+        setContact(res.data.data[0].id)
+        // localStorage.setItem("contact",JSON.stringify(res.data.data[0].id))
+        // dispatch({type:"CONTACT",payload:"res.data.data[0].id"})
+  })
+  .catch(err=>{
+    console.log(err)
+  })
   fetch("http://localhost:5000/ticket",{
     method:"POST",
     headers:{
@@ -35,7 +61,7 @@ const Ticket =()=>{
         "Content-Type":"application/json"
     },
     body:JSON.stringify({
-      firstName:state.firstName,
+    firstName:state.firstName,
     lastName:state.lastName,
     email,
     phone,
@@ -44,19 +70,20 @@ const Ticket =()=>{
     subject,
     category,
     priority,
-    contactId
+    contactId:contactId
     }),
    
 
 })
 .then(res => res.json())
 .then(res=>{
-      console.log("contact",res.data.data[0])
-    setContact(res.data.data[0].id)
+      console.log("contactsss",res)
+      // setContact(res.data.data[0].id)
 })
 .catch(err=>{
   console.log(err)
 })
+
 }
 console.log("c",contactId)
 const alertBox=()=>{
@@ -68,6 +95,7 @@ const alertBox=()=>{
     </Alert>
   ));
 }
+
   return(
     <>
     <Navbar/>
@@ -75,6 +103,7 @@ const alertBox=()=>{
        <Card className="Card">
           <Card.Header><h3>Submit a Ticket</h3></Card.Header>
             <Card.Body className="card-body">
+            <p style={{ fontSize: 20, color: "green" }} >{sub}</p>
               <Form onSubmit={(e)=>handleSubmit(e)} >
                 <div className="form">
                  <Form.Group controlId="exampleForm.ControlSelect1">

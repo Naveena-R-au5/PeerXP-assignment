@@ -40,7 +40,7 @@ const Login =()=>{
             },
             body:JSON.stringify({
                 email,
-                password
+                password,
             })
         }).then(res=>res.json())
         .then(data=>{
@@ -54,6 +54,8 @@ const Login =()=>{
                 localStorage.setItem("jwt",data.token)
                 localStorage.setItem("user",JSON.stringify(data.user))
                 dispatch({type:"USER",payload:"data.user"})
+                localStorage.setItem("contact",JSON.stringify(data.contactId))
+                dispatch({type:"CONTACT",payload:"data.contactId"})
                 history.push('/')
                 submit(true)
             }

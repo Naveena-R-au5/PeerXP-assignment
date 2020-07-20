@@ -32,13 +32,15 @@ router.post('/signup',(req,res)=>{
                 firstName,lastName
             })
             User.save().then(User=>{
-                console.log(User)
+                console.log("signup",User)
                 res.json({message:"Registered successfully!!"})
             })
         
     }).catch(err =>{
         console.log(err)
     })
+
+    
 })
 })
 
@@ -64,6 +66,7 @@ router.post('/login',(req,res)=>{
         }).catch(err =>{
             console.log(err)
         })
+       
     })
 })
 
@@ -93,12 +96,9 @@ router.post("/contacts",(req,res)=>{
     
 
 })
-var contacts 
 
-router.post("/ticket",(req,res)=>{
-    const {firstName,lastName,email,phone,department,category,description,subject,priority,contactId} = req.body
-    
-    console.log("rr",req.body)
+router.post("/conticket",(req,res)=>{
+    const {firstName,lastName,email} = req.body
     fetch(`https://desk.zoho.in/api/v1/contacts/search?limit=1&lastName=${lastName}&firstName=${firstName}&email=${email}`,{
         method:"GET",
         headers:{
@@ -119,9 +119,13 @@ router.post("/ticket",(req,res)=>{
     }).catch(err=>{
         console.log(err)
 })
+})
+router.post("/ticket",(req,res)=>{
+    const {firstName,lastName,email,phone,department,category,description,subject,priority,contactId} = req.body
     
-
-
+    console.log("rr",req.body)
+    
+    
     fetch("https://desk.zoho.in/api/v1/departments",{
         method:"POST",
         // mode:"cors",
@@ -191,7 +195,7 @@ router.post("/ticket",(req,res)=>{
     .then(res=>res.json())
     // .then(console.log(res))
     .then((data)=>{
-        console.log(data)
+        console.log("ticket",data)
     }).catch(err=>{
         console.log(err)
 })
